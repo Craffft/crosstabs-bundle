@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Crosstabs bundle.
+ * This file is part of the Crosstabs Bundle.
  *
  * (c) Daniel Kiesel <https://github.com/iCodr8>
  *
@@ -14,7 +14,7 @@ namespace Craffft\CrosstabsBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Configures the Craffft crosstabs bundle.
+ * Configures the Craffft Crosstabs Bundle.
  */
 class CraffftCrosstabsBundle extends Bundle
 {
