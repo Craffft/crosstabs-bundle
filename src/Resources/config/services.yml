@@ -1,0 +1,3 @@
+services:
+    craffft.crosstabs.util.cross_table:
+        class: Craffft\CrosstabsBundle\Util\CrossTable

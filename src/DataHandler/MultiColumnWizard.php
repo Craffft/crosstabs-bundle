@@ -1,27 +1,17 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS
+/*
+ * This file is part of the Crosstabs Bundle.
  *
- * Copyright (c) 2014-2015 Daniel Kiesel
+ * (c) Daniel Kiesel <https://github.com/iCodr8>
  *
- * @package Crosstabs
- * @link    https://github.com/craffft/contao-crosstabs
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-/**
- * Namespace
- */
-namespace Crosstabs\DataHandler;
+namespace Craffft\CrosstabsBundle\DataHandler;
 
-/**
- * Class MultiColumnWizard
- *
- * @copyright  Daniel Kiesel 2014-2015
- * @author     Daniel Kiesel <daniel@craffft.de>
- */
-class MultiColumnWizard extends \Controller
+class MultiColumnWizard
 {
     /**
      * @param $varValue
@@ -71,8 +61,13 @@ class MultiColumnWizard extends \Controller
      * @param $strCrossCurrentKey
      * @param null $strCrossForeignKey
      */
-    protected static function removeOldItems($strModel, array $arrItems, $intId, $strCrossCurrentKey, $strCrossForeignKey = null)
-    {
+    protected static function removeOldItems(
+        $strModel,
+        array $arrItems,
+        $intId,
+        $strCrossCurrentKey,
+        $strCrossForeignKey = null
+    ) {
         if (!empty($strCrossForeignKey) && count($arrItems) > 0) {
             $t = $strModel::getTable();
             $arrForeignKeys = array_column($arrItems, $strCrossForeignKey);
@@ -81,7 +76,10 @@ class MultiColumnWizard extends \Controller
                 $arrForeignKeys = array(0);
             }
 
-            $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey NOT IN(" . implode(',', array_map('intval', $arrForeignKeys)) . ")"), array($intId));
+            $objItem = $strModel::findBy(array(
+                "$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey NOT IN(" . implode(',',
+                    array_map('intval', $arrForeignKeys)) . ")"
+            ), array($intId));
         } else {
             $objItem = $strModel::findBy($strCrossCurrentKey, $intId);
         }
@@ -100,8 +98,13 @@ class MultiColumnWizard extends \Controller
      * @param $strCrossCurrentKey
      * @param null $strCrossForeignKey
      */
-    protected static function addNewItems($strModel, array $arrItems, $intId, $strCrossCurrentKey, $strCrossForeignKey = null)
-    {
+    protected static function addNewItems(
+        $strModel,
+        array $arrItems,
+        $intId,
+        $strCrossCurrentKey,
+        $strCrossForeignKey = null
+    ) {
         if (count($arrItems) > 0) {
             $t = $strModel::getTable();
 
@@ -114,13 +117,14 @@ class MultiColumnWizard extends \Controller
 
                 if (!empty($strCrossForeignKey)) {
                     $intFk = $arrData[$strCrossForeignKey];
-                    $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey=?"), array($intId, $intFk));
+                    $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey=?"),
+                        array($intId, $intFk));
                 }
 
                 if ($objItem === null) {
                     $objItem = new $strModel();
                     $objItem->tstamp = time();
-                    $objItem->$strCrossCurrentKey  = $intId;
+                    $objItem->$strCrossCurrentKey = $intId;
 
                     if (!empty($strCrossForeignKey)) {
                         $objItem->$strCrossForeignKey = $intFk;

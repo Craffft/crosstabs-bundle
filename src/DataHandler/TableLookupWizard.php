@@ -1,27 +1,17 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS
+/*
+ * This file is part of the Crosstabs Bundle.
  *
- * Copyright (c) 2014-2015 Daniel Kiesel
+ * (c) Daniel Kiesel <https://github.com/iCodr8>
  *
- * @package Crosstabs
- * @link    https://github.com/craffft/contao-crosstabs
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-/**
- * Namespace
- */
-namespace Crosstabs\DataHandler;
+namespace Craffft\CrosstabsBundle\DataHandler;
 
-/**
- * Class TableLookupWizard
- *
- * @copyright  Daniel Kiesel 2014-2015
- * @author     Daniel Kiesel <daniel@craffft.de>
- */
-class TableLookupWizard extends \Controller
+class TableLookupWizard
 {
     /**
      * @param $varValue
@@ -70,11 +60,19 @@ class TableLookupWizard extends \Controller
      * @param $strCrossCurrentKey
      * @param $strCrossForeignKey
      */
-    protected static function removeOldItems($strModel, array $arrItems, $intId, $strCrossCurrentKey, $strCrossForeignKey)
-    {
+    protected static function removeOldItems(
+        $strModel,
+        array $arrItems,
+        $intId,
+        $strCrossCurrentKey,
+        $strCrossForeignKey
+    ) {
         if (count($arrItems) > 0) {
             $t = $strModel::getTable();
-            $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey NOT IN(" . implode(',', array_map('intval', $arrItems)) . ")"), array($intId));
+            $objItem = $strModel::findBy(array(
+                "$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey NOT IN(" . implode(',',
+                    array_map('intval', $arrItems)) . ")"
+            ), array($intId));
         } else {
             $objItem = $strModel::findBy($strCrossCurrentKey, $intId);
         }
@@ -99,12 +97,13 @@ class TableLookupWizard extends \Controller
             $t = $strModel::getTable();
 
             foreach ($arrItems as $intFk) {
-                $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey=?"), array($intId, $intFk));
+                $objItem = $strModel::findBy(array("$t.$strCrossCurrentKey=? AND $t.$strCrossForeignKey=?"),
+                    array($intId, $intFk));
 
                 if ($objItem === null) {
                     $objItem = new $strModel();
                     $objItem->tstamp = time();
-                    $objItem->$strCrossCurrentKey  = $intId;
+                    $objItem->$strCrossCurrentKey = $intId;
                     $objItem->$strCrossForeignKey = $intFk;
                 }
 

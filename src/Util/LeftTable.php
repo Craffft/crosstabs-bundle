@@ -1,36 +1,21 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS
+/*
+ * This file is part of the Crosstabs Bundle.
  *
- * Copyright (c) 2014 Daniel Kiesel
+ * (c) Daniel Kiesel <https://github.com/iCodr8>
  *
- * @package Crosstabs
- * @link    https://github.com/craffft/contao-crosstabs
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-/**
- * Namespace
- */
-namespace Crosstabs;
+namespace Craffft\CrosstabsBundle\Util;
 
-/**
- * Class LeftTable
- *
- * @copyright  Daniel Kiesel 2014
- * @author     Daniel Kiesel <daniel@craffft.de>
- */
-class LeftTable extends \Controller
+class LeftTable
 {
-
     /**
-     * Copies the cross table items from the current copied left table item
-     *
-     * @access public
-     * @static
-     * @param  int $intPasteId
-     * @param  \DataContainer $dc
+     * @param $intPasteId
+     * @param \DataContainer $dc
      */
     public static function copyCallback($intPasteId, \DataContainer $dc)
     {
@@ -67,9 +52,7 @@ class LeftTable extends \Controller
     /**
      * Removes the cross table items from the current deleted left table item
      *
-     * @access public
-     * @static
-     * @param  \DataContainer $dc
+     * @param \DataContainer $dc
      */
     public static function deleteCallback(\DataContainer $dc)
     {
@@ -78,7 +61,6 @@ class LeftTable extends \Controller
         }
 
         $intId = $dc->activeRecord->id;
-        $strTable = $dc->table;
 
         if (isset($GLOBALS['TL_DCA'][$dc->table]['fields'])) {
             foreach ($GLOBALS['TL_DCA'][$dc->table]['fields'] as $k => $v) {
