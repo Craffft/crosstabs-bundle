@@ -1,6 +1,6 @@
 {
     "name": "craffft/crosstabs-bundle",
-    "type": "symfony-bundle",
+    "type": "contao-bundle",
     "description": "Contao 4 crosstabs bundle",
     "keywords": ["crosstabs", "crosstable", "cross", "database", "tables"],
     "license": "MIT",
