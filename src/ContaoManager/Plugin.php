@@ -1,6 +1,6 @@
 <?php
 
-namespace Craffft\TranslationFieldsBundle\ContaoManager;
+namespace Craffft\CrosstabsBundle\ContaoManager;
 
 class Plugin
 {
